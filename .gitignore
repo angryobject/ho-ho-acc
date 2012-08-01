@@ -1,0 +1,7 @@
+# OS generated files #
+*.swp
+.DS_Store*
+Thumbs.db
+
+# Put here whatever you like
+git-ignore/

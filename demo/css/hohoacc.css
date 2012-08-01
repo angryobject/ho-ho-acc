@@ -1,0 +1,55 @@
+.hohoacc {
+  width: 100%;
+  position: relative;
+}
+
+.hohoacc > .panel {
+  position: absolute;
+  overflow: hidden;
+  background-position: left center;
+  /*box-shadow: 5px 0 10px -5px #000;*/
+}
+
+.hohoacc > .panel > .content {
+  height: 100%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+.hohoacc > .panel-bg-centered {
+  background-position: center center !important;
+}
+
+.hohoacc > .panel-bg-righted {
+  background-position: right center !important;
+}
+
+.hohoacc > .panel-centered > .content {
+  position: relative;
+  margin-left: 50%;
+}
+
+.hohoacc > .panel-righted > .content {
+  position: relative;
+  margin-left: 100%;
+}
+
+/* 3D
+   ========================================================================== */
+.hohoacc3d > .panel {
+  -webkit-transform: perspective( 600px ) skewY(0deg);
+  -webkit-transition: -webkit-transform 0.5s ease;
+}
+
+.hohoacc3d > .panel-left {
+  -webkit-transform:  skewY(2deg);
+}
+
+.hohoacc3d > .panel-right {
+  -webkit-transform:  skewY(-2deg);
+}
+
+.hohoacc3d > .active {
+  z-index: 0 !important;
+}

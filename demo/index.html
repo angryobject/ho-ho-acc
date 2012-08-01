@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="HoHoAcc - horizontal hover accordeon jquery plugin">
+  <meta name="author" content="">
+  <title>HoHoAcc - Horizontal Hover Accordeon</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css" media="all" />
+  <link rel="stylesheet" href="css/hohoacc.css" media="all" />
+  <link rel="stylesheet" href="css/style.css" media="all" />
+</head>
+<body>
+
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="brand" href="#">
+          HoHoAcc
+        </a>
+        <ul class="nav">
+          <li><a href="#about">About</a></li>
+          <li><a href="#howto">How to use</a></li>
+          <li class="divider-vertical"></li>
+          <li><a href="demo.zip">Download this demo</a></li>
+          <li class="divider-vertical"></li>
+          <li><a href="js/libs/hohoacc.js">Download source only</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="body" class="container">
+    <div class="row">
+      <div class="span12">
+        <section id="about">
+          <div class="page-header">
+            <h1>About</h1>
+          </div>
+          <p>
+            HoHoAcc stands for horizontal hover accordeon. It is a simple and easy to use jquery plugin to make accordeons like this:
+          </p>
+          <!-- ABOUT EXAMPLE 1-->
+          <div id="about-example1" class="hohoacc">
+            <div class="panel">
+              <div>
+                <p>
+                  Hi! I'm left panel. My content is aligned <strong>left</strong>.
+                </p>
+
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+                <img src="img/stones/1.jpg">
+              </div>
+            </div>
+
+            <div class="panel panel-centered">
+              <div>
+                <p align="center">
+                  Hi! I'm center panel. My content is <strong>centered</strong>.
+                </p>
+
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+                <img src="img/stones/2.jpg">
+              </div>
+            </div>
+
+            <div class="panel panel-righted">
+              <div>
+                <p align="right">
+                  Hi! I'm right panel. My content is aligned <strong>right</strong>.
+                </p>
+
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+                <img src="img/stones/3.jpg">
+              </div>
+            </div>
+          </div>
+
+          <!-- ABOUT EXAMPLE 2-->
+          <p> Or this: </p>
+
+          <div id="about-example2" class="hohoacc">
+            <div class="panel panel-bg-centered"></div>
+            <div class="panel panel-bg-centered"></div>
+            <div class="panel panel-bg-centered"></div>
+          </div>
+
+          <!-- ABOUT EXAMPLE 3-->
+          <p> This: </p>
+
+          <div id="about-example3" class="hohoacc" data-panel-width="840">
+            <div class="panel panel-bg-centered">
+              <div class="side-bg"></div>
+              <h2>Lorem ipsum!</h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+              consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+              proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+            <div class="panel panel-bg-centered">
+              <div class="side-bg"></div>
+              <h2>Dolor sit amet!</h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+              consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+              proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+          </div>
+
+          <!-- ABOUT EXAMPLE 4-->
+          <p> And check out this guys too: </p>
+
+          <div id="about-example4" class="hohoacc" data-panel-width="300">
+            <div class="panel">
+              <h2>Hippo!</h2>
+              <img src="img/animals/hippo.png"/>
+            </div>
+            <div class="panel">
+              <h2>Leo!</h2>
+              <img src="img/animals/leopard.png"/>
+            </div>
+            <div class="panel">
+              <h2>Donny!</h2>
+              <img src="img/animals/donkey.png"/>
+            </div>
+            <div class="panel">
+              <h2>Ostry!</h2>
+              <img src="img/animals/ostrich.png"/>
+            </div>
+            <div class="panel">
+              <h2>Zee!</h2>
+              <img src="img/animals/zebra.png"/>
+            </div>
+          </div>
+
+        </section>
+        <section id="howto">
+          <div class="page-header">
+            <h1>How to use</h1>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+<!-- SCRIPTS-->  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script>window.jQuery || document.write("<script src=\"js/libs/jquery-1.7.2.min.js\"><\/script>");</script>
+<script src="js/libs/hohoacc.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
