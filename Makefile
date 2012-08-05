@@ -1,4 +1,5 @@
 BASEDIR = .
+JSLINT = $(BASEDIR)/node_modules/jslint/bin/jslint.js --indent 2 --browser true
 
 all: copy-demo-files zip-demo
 
@@ -11,3 +12,5 @@ zip-demo:
 	zip -r $(BASEDIR)/demo.zip $(BASEDIR)/demo
 	mv $(BASEDIR)/demo.zip $(BASEDIR)/demo/
 
+jslint:
+	node $(JSLINT) $(BASEDIR)/js/hohoacc.js

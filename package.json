@@ -1,0 +1,16 @@
+{
+  "name": "HoHoAccordeon",
+  "description": "A jQuery accordeon plugin",
+  "version": "0.3.3",
+  "author": {
+    "name": "Max Shishkin"
+  },
+  "keywords": [
+    "jquery",
+    "accordeon"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "jslint": "*"
+  }
+}
