@@ -1,6 +1,7 @@
 (function ($, window, document, undefined) {
   "use strict";
 
+  // private methods
   var priv = {
     use: function (fn, obj, args) {
       args = args || [];
@@ -9,7 +10,7 @@
 
     initContentContainers: function () {
       var self = this,
-          container;
+        container;
 
       $.each(self.$panels, function () {
         container = $("<div class=\"content\"></div>");
@@ -20,7 +21,7 @@
 
     layoutContentContainers: function () {
       var self = this,
-          container;
+        container;
 
       $.each(self.$panels, function () {
         container = this.children(".content");
@@ -39,7 +40,7 @@
 
     adjustPanelsSize: function () {
       var self = this,
-          height = self.$elem.height();
+        height = self.$elem.height();
 
       if (height === 0) {
         $.each(self.$panels, function () {
@@ -102,18 +103,19 @@
     }
   };
 
+  // public methods
   var api = {
     expandPanel: function (index) {
       var self = this,
-          expandIndex = index,
-          coords = self.opts.coords,
-          deltaWidth = self.opts.teaserExpandedWidth - self.opts.teaserCollapsedWidth,
-          deltaCount = 0,
-          gapDelta = self.opts.gapMax - self.opts.gapMin,
-          moveLeft = true,
-          width,
-          left,
-          e;
+        expandIndex = index,
+        coords = self.opts.coords,
+        deltaWidth = self.opts.teaserExpandedWidth - self.opts.teaserCollapsedWidth,
+        deltaCount = 0,
+        gapDelta = self.opts.gapMax - self.opts.gapMin,
+        moveLeft = true,
+        width,
+        left,
+        e;
 
       if (!priv.use("indexBounds", self, [index])) {
         return;
@@ -158,8 +160,8 @@
 
     collapsePanel: function (index) {
       var self = this,
-          coords = self.opts.coords,
-          e;
+        coords = self.opts.coords,
+        e;
 
       if (!priv.use("indexBounds", self, [index])) {
         return;
@@ -171,11 +173,11 @@
       self.$elem.trigger(e);
 
       $.each(self.$panels, function (index) {
-          this.removeClass("active panel-left panel-right");
-          this.stop().animate({
-            width: self.opts.teaserExpandedWidth,
-            left: coords[index]
-          }, self.opts.speed, self.opts.easing);
+        this.removeClass("active panel-left panel-right");
+        this.stop().animate({
+          width: self.opts.teaserExpandedWidth,
+          left: coords[index]
+        }, self.opts.speed, self.opts.easing);
       });
 
       e = $.Event("collapsePanelEnd");
@@ -194,9 +196,9 @@
         self.opts.panelWidth = parseInt(self.opts.panelWidth, 10) / 100 * self.$elem.width();
       }
 
-      self.opts.panelWidth <= self.$elem.width() || (
-        self.opts.panelWidth = self.$elem.width() * 0.7
-      );
+      if (self.opts.panelWidth > self.$elem.width()) {
+        self.opts.panelWidth = self.$elem.width() * 0.7;
+      }
 
       self.opts.panelWidth = Math.ceil(self.opts.panelWidth);
 
@@ -211,6 +213,7 @@
     }
   };
 
+  // constructor function
   var HoHoAcc = function (opts, elem) {
     var self = this;
 
@@ -230,9 +233,9 @@
       self.opts.panelWidth = parseInt(self.opts.panelWidth, 10) / 100 * self.$elem.width();
     }
 
-    self.opts.panelWidth <= self.$elem.width() || (
-      self.opts.panelWidth = self.$elem.width() * 0.7
-    );
+    if (self.opts.panelWidth > self.$elem.width()) {
+      self.opts.panelWidth = self.$elem.width() * 0.7;
+    }
 
     self.opts.panelWidth = Math.floor(self.opts.panelWidth);
 
@@ -249,8 +252,10 @@
     priv.use("addListeners", self);
   };
 
+  // prototype assignment
   HoHoAcc.prototype = api;
 
+  // jQuery function
   $.fn.hoHoAcc = function (opts) {
     return this.each(function () {
       var hoHoAcc = new HoHoAcc(opts, this);
@@ -258,6 +263,7 @@
     });
   };
 
+  // default options
   $.fn.hoHoAcc.options = {
     panelWidth: 0,
     gapMin: 0,
@@ -265,4 +271,4 @@
     speed: 200,
     easing: "swing"
   };
-}(jQuery, window, document));
+}(window.jQuery, window, document));
