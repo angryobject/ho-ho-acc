@@ -71,7 +71,7 @@ describe("HoHoAcc", function () {
         panelWidth = Math.floor(fullWidth * 0.7),
         i;
 
-      for(i = 0; i < numPanels; i += 1) {
+      for (i = 0; i < numPanels; i += 1) {
         hoHoAcc.collapsePanel(i - 1);
         hoHoAcc.expandPanel(i);
         expect($(panels[i]).width()).toEqual(panelWidth);
@@ -81,13 +81,13 @@ describe("HoHoAcc", function () {
     it("should be able to take user specified panelWidth in percent", function (){
       var fullWidth = $("#hohoacc").width(),
         userPanelWidth = "40%",
-        computedPanelWidth = fullWidth * parseInt(userPanelWidth, 10) / 100,
+        computedPanelWidth = fullWidth * 0.4,
         hoHoAcc = $("#hohoacc").hoHoAcc({speed: 0, panelWidth: userPanelWidth}).data("hoHoAcc"),
         panels = $("#hohoacc").children(".panel"),
         numPanels = panels.length,
         i;
 
-      for(i = 0; i < numPanels; i += 1) {
+      for (i = 0; i < numPanels; i += 1) {
         hoHoAcc.collapsePanel(i - 1);
         hoHoAcc.expandPanel(i);
         expect($(panels[i]).width()).toEqual(computedPanelWidth);
@@ -101,7 +101,7 @@ describe("HoHoAcc", function () {
         numPanels = panels.length,
         i;
 
-      for(i = 0; i < numPanels; i += 1) {
+      for (i = 0; i < numPanels; i += 1) {
         hoHoAcc.collapsePanel(i - 1);
         hoHoAcc.expandPanel(i);
         expect($(panels[i]).width()).toEqual(userPanelWidth);
@@ -117,7 +117,7 @@ describe("HoHoAcc", function () {
         numPanels = panels.length,
         i;
 
-      for(i = 0; i < numPanels; i += 1) {
+      for (i = 0; i < numPanels; i += 1) {
         hoHoAcc.collapsePanel(i - 1);
         hoHoAcc.expandPanel(i);
         expect($(panels[i]).width()).toEqual(computedPanelWidth);
@@ -145,12 +145,12 @@ describe("HoHoAcc", function () {
         teaserCollapseWidth = Math.floor((fullWidth - panelWidth) / (numPanels - 1)),
         i;
 
-        for(i = 0; i < numPanels; i += 1) {
+        for (i = 0; i < numPanels; i += 1) {
           hoHoAcc.collapsePanel(i - 1);
           hoHoAcc.expandPanel(i);
 
           panels.each(function (j, panel) {
-            if(j != i){
+            if (j != i){
               expect($(panel).width()).toEqual(teaserCollapseWidth);
             }
           });
@@ -181,7 +181,7 @@ describe("HoHoAcc", function () {
         i,
         left;
 
-        for(i = 0; i < numPanels; i += 1) {
+        for (i = 0; i < numPanels; i += 1) {
           hoHoAcc.collapsePanel(i - 1);
           hoHoAcc.expandPanel(i);
           left = 0;
@@ -219,12 +219,12 @@ describe("HoHoAcc", function () {
         teaserCollapseWidth = Math.floor(((fullWidth - panelWidth) - gapMin * (numPanels - 1)) / (numPanels - 1)),
         i;
 
-        for(i = 0; i < numPanels; i += 1) {
+        for (i = 0; i < numPanels; i += 1) {
           hoHoAcc.collapsePanel(i - 1);
           hoHoAcc.expandPanel(i);
 
           panels.each(function (j, panel) {
-            if(j != i){
+            if (j != i){
               expect($(panel).width()).toEqual(teaserCollapseWidth);
             }
           });
@@ -257,7 +257,7 @@ describe("HoHoAcc", function () {
         i,
         left;
 
-        for(i = 0; i < numPanels; i += 1) {
+        for (i = 0; i < numPanels; i += 1) {
           hoHoAcc.collapsePanel(i - 1);
           hoHoAcc.expandPanel(i);
           left = 0;
@@ -271,6 +271,40 @@ describe("HoHoAcc", function () {
             left += gapMin;
           });
         }
+    });
+
+    it("should be able to be rebuilt with new parameters, optionally", function () {
+      var hoHoAcc = $("#hohoacc").hoHoAcc({speed: 0}).data("hoHoAcc"),
+        panels = $("#hohoacc").children(".panel"),
+        numPanels = panels.length,
+        fullWidth,
+        panelWidth,
+        teaserExpandedWidth,
+        teaserCollapsedWidth,
+        gapMax,
+        left,
+        i;
+
+      fullWidth = 700;
+      panelWidth = Math.floor(700 * 0.7);
+      gapMax = 10;
+      teaserExpandedWidth = Math.floor((fullWidth - gapMax * (numPanels - 1)) / numPanels);
+      teaserCollapsedWidth = Math.floor((fullWidth - panelWidth) / (numPanels - 1));
+
+      $("#hohoacc").width(fullWidth);
+
+      hoHoAcc.rebuild({gapMax: gapMax});
+
+      expect(hoHoAcc.opts.panelWidth).toEqual(panelWidth);
+      expect(hoHoAcc.opts.gapMax).toEqual(gapMax);
+      expect(hoHoAcc.opts.teaserCollapsedWidth).toEqual(teaserCollapsedWidth);
+      expect(hoHoAcc.opts.teaserExpandedWidth).toEqual(teaserExpandedWidth);
+
+      left = 0;
+      for (i = 0; i < numPanels; i += 1) {
+        expect(hoHoAcc.opts.coords[i]).toEqual(left);
+        left += teaserExpandedWidth + gapMax;
+      }
     });
 
   });
