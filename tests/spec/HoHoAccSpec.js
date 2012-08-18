@@ -20,6 +20,45 @@ describe("HoHoAcc", function () {
       loadFixtures('fixture.html');
     });
 
+    it("should be able to take options via data-attributes", function () {
+      var elem = sandbox({class: "hohoacc",
+                      "data-panelwidth" : 300,
+                      "data-gapmax" : 20,
+                      "data-gapmin" : 10,
+                      "data-speed" : 400,
+                      "data-easing" : "linear"
+                    }),
+        hoHoAcc = elem.hoHoAcc().data("hoHoAcc");
+
+        expect(hoHoAcc.optsDefault.panelWidth).toEqual(300);
+        expect(hoHoAcc.optsDefault.gapMax).toEqual(20);
+        expect(hoHoAcc.optsDefault.gapMin).toEqual(10);
+        expect(hoHoAcc.optsDefault.speed).toEqual(400);
+        expect(hoHoAcc.optsDefault.easing).toEqual("linear");
+    });
+
+    it("should privilege data-attribute options over options passed to contructor", function () {
+      var elem = sandbox({class: "hohoacc",
+                      "data-panelwidth" : 300,
+                      "data-gapmax" : 20,
+                      "data-gapmin" : 10,
+                      "data-speed" : 400,
+                      "data-easing" : "linear"
+                    }),
+        hoHoAcc = elem.hoHoAcc({panelWidth: 400,
+                      gapMax: 30,
+                      gapMin: 20,
+                      speed: 100,
+                      easing: "bounce"
+                    }).data("hoHoAcc");
+
+        expect(hoHoAcc.optsDefault.panelWidth).toEqual(300);
+        expect(hoHoAcc.optsDefault.gapMax).toEqual(20);
+        expect(hoHoAcc.optsDefault.gapMin).toEqual(10);
+        expect(hoHoAcc.optsDefault.speed).toEqual(400);
+        expect(hoHoAcc.optsDefault.easing).toEqual("linear");
+    });
+
     it("should make wrapper take its container width", function () {
       expect($("#hohoacc").width()).toEqual($("#container").width());
     });

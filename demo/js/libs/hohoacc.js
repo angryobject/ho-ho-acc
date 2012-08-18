@@ -8,6 +8,60 @@
       return priv[fn].apply(obj, args);
     },
 
+    parseOpts: function (userOpts) {
+      var self = this,
+        opts = {},
+        userOpts = userOpts || {};
+
+      opts.panelWidth = self.$elem.data("panelwidth") || userOpts.panelWidth || $.fn.hoHoAcc.options.panelWidth;
+      opts.easing = self.$elem.data("easing") || userOpts.easing || $.fn.hoHoAcc.options.easing;
+
+      opts.gapMin = parseInt(self.$elem.data("gapmin"), 10);
+
+      if (isNaN(opts.gapMin)) {
+        opts.gapMin = userOpts.gapMin >= 0 ? userOpts.gapMin :
+                      $.fn.hoHoAcc.options.gapMin;
+      }
+
+      opts.gapMax = parseInt(self.$elem.data("gapmax"), 10);
+
+      if (isNaN(opts.gapMax)) {
+        opts.gapMax = userOpts.gapMax >= 0 ? userOpts.gapMax :
+                      $.fn.hoHoAcc.options.gapMax;
+      }
+
+      opts.speed = parseInt(self.$elem.data("speed"), 10);
+
+      if (isNaN(opts.speed)) {
+        opts.speed = userOpts.speed >= 0 ? userOpts.speed :
+                      $.fn.hoHoAcc.options.speed;
+      }
+
+      return opts;
+    },
+
+    processOpts: function() {
+      var self = this;
+
+      if (typeof self.opts.panelWidth === "string") {
+        if(self.opts.panelWidth.substring(self.opts.panelWidth.length - 1) === "%") {
+          self.opts.panelWidth = parseInt(self.opts.panelWidth, 10) / 100 * self.$elem.width();
+        } else {
+          self.opts.panelWidth = parseInt(self.opts.panelWidth, 10);
+        }
+      }
+
+      if (self.opts.panelWidth > self.$elem.width()) {
+        self.opts.panelWidth = self.$elem.width() * 0.7;
+      }
+
+      self.opts.panelWidth = Math.floor(self.opts.panelWidth);
+
+      self.opts.teaserCollapsedWidth = Math.floor((self.$elem.width() - self.opts.panelWidth - self.opts.gapMin * (self.$panels.length - 1)) / (self.$panels.length - 1));
+      self.opts.teaserExpandedWidth = Math.floor((self.$elem.width() - self.opts.gapMax * (self.$panels.length - 1)) / self.$panels.length);
+      self.opts.coords = [];
+    },
+
     initContentContainers: function () {
       var self = this,
         container;
@@ -187,25 +241,14 @@
 
     },
 
-    rebuild: function () {
-      var self = this;
+    rebuild: function (opts) {
+      var self = this,
+        opts = opts || {};
 
-      self.opts.panelWidth = self.optsDefault.panelWidth || self.$elem.data("panel-width") || self.$elem.width() * 0.7;
+      self.optsDefault = $.extend({}, self.optsDefault, opts);
+      self.opts = $.extend({}, self.optsDefault);
 
-      if (typeof self.opts.panelWidth === "string" && self.opts.panelWidth.substring(self.opts.panelWidth.length - 1) === "%") {
-        self.opts.panelWidth = parseInt(self.opts.panelWidth, 10) / 100 * self.$elem.width();
-      }
-
-      if (self.opts.panelWidth > self.$elem.width()) {
-        self.opts.panelWidth = self.$elem.width() * 0.7;
-      }
-
-      self.opts.panelWidth = Math.ceil(self.opts.panelWidth);
-
-      self.opts.teaserCollapsedWidth = Math.ceil((self.$elem.width() - self.opts.panelWidth - self.opts.gapMin * (self.$panels.length - 1)) / (self.$panels.length - 1));
-      self.opts.teaserExpandedWidth = Math.ceil((self.$elem.width() - self.opts.gapMax * (self.$panels.length - 1)) / self.$panels.length);
-      self.opts.coords = [];
-
+      priv.use("processOpts", self);
       priv.use("layoutContentContainers", self);
       priv.use("adjustPanelsSize", self);
       priv.use("layoutPanels", self);
@@ -218,31 +261,17 @@
     var self = this;
 
     self.elem         = elem;
-    self.opts         = $.extend({}, $.fn.hoHoAcc.options, opts);
-    self.optsDefault  = $.extend({}, $.fn.hoHoAcc.options, opts);
     self.$elem        = $(elem);
+    self.optsDefault  = priv.use("parseOpts", self, [opts]);
+    self.opts         = $.extend({}, self.optsDefault);
+
     self.$panels      = [];
 
     self.$elem.children(".panel").each(function () {
       self.$panels.push($(this));
     });
 
-    self.opts.panelWidth = self.opts.panelWidth || self.$elem.data("panel-width") || self.$elem.width() * 0.7;
-
-    if (typeof self.opts.panelWidth === "string" && self.opts.panelWidth.substring(self.opts.panelWidth.length - 1) === "%") {
-      self.opts.panelWidth = parseInt(self.opts.panelWidth, 10) / 100 * self.$elem.width();
-    }
-
-    if (self.opts.panelWidth > self.$elem.width()) {
-      self.opts.panelWidth = self.$elem.width() * 0.7;
-    }
-
-    self.opts.panelWidth = Math.floor(self.opts.panelWidth);
-
-    self.opts.teaserCollapsedWidth = Math.floor((self.$elem.width() - self.opts.panelWidth - self.opts.gapMin * (self.$panels.length - 1)) / (self.$panels.length - 1));
-    self.opts.teaserExpandedWidth = Math.floor((self.$elem.width() - self.opts.gapMax * (self.$panels.length - 1)) / self.$panels.length);
-    self.opts.coords = [];
-
+    priv.use("processOpts", self);
     priv.use("initContentContainers", self);
     priv.use("layoutContentContainers", self);
     priv.use("adjustPanelsSize", self);
@@ -265,7 +294,7 @@
 
   // default options
   $.fn.hoHoAcc.options = {
-    panelWidth: 0,
+    panelWidth: "70%",
     gapMin: 0,
     gapMax: 0,
     speed: 200,
