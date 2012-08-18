@@ -1,3 +1,10 @@
+/*!
+ * HoHoAcc jQuery accordeon plugin.
+ *
+ * Copyright (c) 2012, Max Shishkin.
+ * Licensed under the MIT license.
+ */
+
 (function ($, window, document, undefined) {
   "use strict";
 
