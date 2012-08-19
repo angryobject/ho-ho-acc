@@ -1,5 +1,5 @@
 /*!
- * HoHoAcc jQuery accordeon plugin.
+ * HoHoAcc jQuery accordion plugin.
  * http://maxshishkin.github.com/ho-ho-acc/
  *
  * Copyright (c) 2012, Max Shishkin.
