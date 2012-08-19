@@ -1,8 +1,10 @@
 /*!
  * HoHoAcc jQuery accordeon plugin.
+ * http://maxshishkin.github.com/ho-ho-acc/
  *
  * Copyright (c) 2012, Max Shishkin.
  * Licensed under the MIT license.
+ * https://raw.github.com/MaxShishkin/ho-ho-acc/master/LICENSE
  */
 
 (function ($, window, document, undefined) {
