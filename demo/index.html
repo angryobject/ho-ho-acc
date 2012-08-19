@@ -6,6 +6,7 @@
   <meta name="author" content="">
   <title>HoHoAcc - Horizontal Hover Accordeon</title>
   <link rel="stylesheet" href="css/bootstrap.min.css" media="all" />
+  <link rel="stylesheet" href="css/prettify.css" media="all" />
   <link rel="stylesheet" href="css/hohoacc.css" media="all" />
   <link rel="stylesheet" href="css/style.css" media="all" />
   <link rel="shortcut icon" href="favicon.ico" />
@@ -21,6 +22,7 @@
         <ul class="nav">
           <li><a href="#about">About</a></li>
           <li><a href="#howto">How to use</a></li>
+          <li><a href="#examples">More Exmaples</a></li>
           <li class="divider-vertical"></li>
           <li><a href="demo.zip">Download this demo</a></li>
           <li class="divider-vertical"></li>
@@ -44,6 +46,7 @@
   <div id="body" class="container">
     <div class="row">
       <div class="span12">
+
         <section id="about">
           <div class="page-header">
             <h1>About</h1>
@@ -51,8 +54,10 @@
           <p>
             HoHoAcc stands for horizontal hover accordeon. It is a simple and easy to use jquery plugin to make accordeons like this:
           </p>
-          <!-- ABOUT EXAMPLE 1-->
-          <div id="about-example1" class="hohoacc">
+
+          <!-- EXAMPLE 1 -->
+
+          <div id="example1" class="hohoacc">
             <div class="panel">
               <div>
                 <p>
@@ -104,74 +109,163 @@
               </div>
             </div>
           </div>
-
-          <!-- ABOUT EXAMPLE 2-->
-          <p> Or this: </p>
-
-          <div id="about-example2" class="hohoacc">
-            <div class="panel panel-bg-centered"></div>
-            <div class="panel panel-bg-centered"></div>
-            <div class="panel panel-bg-centered"></div>
-          </div>
-
-          <!-- ABOUT EXAMPLE 3-->
-          <p> This: </p>
-
-          <div id="about-example3" class="hohoacc" data-panel-width="840">
-            <div class="panel panel-bg-centered">
-              <div class="side-bg"></div>
-              <h2>Lorem ipsum!</h2>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-              consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-              proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            </div>
-            <div class="panel panel-bg-centered">
-              <div class="side-bg"></div>
-              <h2>Dolor sit amet!</h2>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-              consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-              proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            </div>
-          </div>
-
-          <!-- ABOUT EXAMPLE 4-->
-          <p> And check out this guys too: </p>
-
-          <div id="about-example4" class="hohoacc" data-panel-width="300">
-            <div class="panel">
-              <h2>Hippo!</h2>
-              <img src="img/animals/hippo.png"/>
-            </div>
-            <div class="panel">
-              <h2>Leo!</h2>
-              <img src="img/animals/leopard.png"/>
-            </div>
-            <div class="panel">
-              <h2>Donny!</h2>
-              <img src="img/animals/donkey.png"/>
-            </div>
-            <div class="panel">
-              <h2>Ostry!</h2>
-              <img src="img/animals/ostrich.png"/>
-            </div>
-            <div class="panel">
-              <h2>Zee!</h2>
-              <img src="img/animals/zebra.png"/>
-            </div>
-          </div>
-
         </section>
+
         <section id="howto">
           <div class="page-header">
             <h1>How to use</h1>
           </div>
+
+          <div class="row">
+
+            <div class="span7">
+              <div>
+                <p>HTML:</p>
+                <pre class="prettyprint linenums">
+&lt;div class="hohoacc"&gt;
+  &lt;div class="panel"&gt;
+    ... your content ...
+  &lt;/div>
+  &lt;div class="panel"&gt;
+    ... your content ...
+  &lt;/div>
+  &lt;div class="panel"&gt;
+    ... your content ...
+  &lt;/div>
+  &lt;div class="panel"&gt;
+    ... your content ...
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+              </div>
+
+              <div>
+                <p>JavaScript:</p>
+              <pre class="prettyprint linenums">
+$(".hohoacc").hoHoAcc();</pre>
+              </div>
+
+              <div>
+                <p>This is the basic usage example.</p>
+
+                <p>You specify the container <code>&lt;div&nbsp;class="hohoacc"&gt;</code>
+                and add panels <code>&lt;div&nbsp;class="panel"&gt;</code> with content inside of it.</p>
+
+                <p>In your javascript you simply invoke the plugin by <code>$(".hohoacc").hoHoAcc();</code></p>
+
+                <p> On the right you can find the list of avaliable options you can pass to constructor.</p>
+
+                <p>All options also can be passed as data attributes in html (notice that options all lowercased here):</p>
+
+                <pre class="prettyprint linenums">
+&lt;div class="hohoacc" data-panelwidth="400" data-gapmax="10"&gt;
+&lt;/div&gt;</pre>
+                <p>Also, a number of extra classes is avaliable to align the contents of panels. Check them on the right.</p>
+
+                <p>Check the examples on that page for more detailes.</p>
+              </div>
+            </div>
+
+            <div class="span5">
+              <p>There is a number of options that can be passed to constructor as object:</p>
+              <pre>
+$(".hohoacc").hoHoAcc({
+  panelWidth: 500,
+  gapMax: 10,
+  gapMin: 20,
+  speed: 300,
+  easing: "linear"
+});</pre>
+              <ul>
+                <li><code>panelWidth</code> specifies the width of the panel when you hover it. It can be a number
+                  or a string containing the relative width in percents (e.g. <code>panelWidth:&nbsp;"80%"</code>).
+                  Defaults to 70%.</li>
+                <li><code>gapMax</code> specifies the space beetween the panels when nothing is hovered. It's a number.
+                  Defaults to 0.</li>
+                <li><code>gapMin</code> specifies the space beetween the panels when one of them is hovered. Defaults to 0.</li>
+                <li><code>speed</code> specifies animation duration.</li>
+                <li><code>easing</code> specifies the easing function name to be applied to animation.</li>
+              </ul>
+              <p>Additional classes avaliable for panels:</p>
+                <ul>
+                  <li><code>.panel-bg-centered</code> forces the background image of panel to be aligned center
+                    (<span class="badge badge-warning">warn:</span> using !importaint).</li>
+                  <li><code>.panel-bg-righted</code> forces the background image of panel to be aligned right
+                    (<span class="badge badge-warning">warn:</span> using !importaint).</li>
+                  <li><code>.panel-centered</code> forces the contents of the panel to align center.</li>
+                  <li><code>.panel-righted</code> forces the contents of the panel to align right.</li>
+                </ul>
+            </div>
+          </div>
         </section>
+
+        <section id="examples">
+          <div class="page-header">
+            <div class="page-header">
+              <h1>Few more examples</h1>
+            </div>
+
+            <!-- EXAMPLE 2 -->
+
+            <div id="example2" class="hohoacc">
+              <div class="panel panel-bg-centered"></div>
+              <div class="panel panel-bg-centered"></div>
+              <div class="panel panel-bg-centered"></div>
+              <div class="panel panel-bg-centered"></div>
+            </div>
+
+            <!-- EXAMPLE 3 -->
+
+            <div id="example3" class="hohoacc" data-panel-width="840">
+              <div class="panel panel-bg-centered">
+                <div class="side-bg"></div>
+                <h2>Lorem ipsum!</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              </div>
+              <div class="panel panel-bg-centered">
+                <div class="side-bg"></div>
+                <h2>Dolor sit amet!</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              </div>
+            </div>
+
+            <!-- EXAMPLE 4 -->
+
+            <div id="example4" class="hohoacc" data-panel-width="300">
+              <div class="panel">
+                <h2>Hippo!</h2>
+                <img src="img/animals/hippo.png"/>
+              </div>
+              <div class="panel">
+                <h2>Leo!</h2>
+                <img src="img/animals/leopard.png"/>
+              </div>
+              <div class="panel">
+                <h2>Donny!</h2>
+                <img src="img/animals/donkey.png"/>
+              </div>
+              <div class="panel">
+                <h2>Ostry!</h2>
+                <img src="img/animals/ostrich.png"/>
+              </div>
+              <div class="panel">
+                <h2>Zee!</h2>
+                <img src="img/animals/zebra.png"/>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
       </div>
     </div>
   </div>
@@ -182,6 +276,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script>window.jQuery || document.write("<script src=\"js/libs/jquery-1.7.2.min.js\"><\/script>");</script>
 <script src="js/libs/bootstrap-dropdown.min.js"></script>
+<script src="js/libs/google-code-prettify/prettify.js"></script>
 <script src="js/libs/hohoacc.min.js"></script>
 <script src="js/script.js"></script>
 </body>

@@ -17,84 +17,80 @@ section {
   z-index: 1031;
 }
 
-/* ==========================================================================
-   About example
-   ========================================================================== */
+#examples .hohoacc {
+  margin: 30px 0 60px 0;
+}
 
 /* Example 1
    ========================================================================== */
-#about-example1 {
+#example1 {
   height: 200px;
 }
 
-#about-example1 .panel {
+#example1 .panel {
   background: #222;
   color: #7A7A7A;
 }
 
-#about-example1 .panel .content {
+#example1 .panel .content {
   padding: 10px;
 }
 
 /* Example 2
    ========================================================================== */
-#about-example2 {
-  height: 400px;
+#example2 {
+  height: 501px;
 }
 
-#about-example2 .panel1 {
-  background: url(../img/stones/1.jpg);
+#example2 .panel1 {
+  background: url(../img/ng/01.jpg);
 }
-#about-example2 .panel2 {
-  background: url(../img/stones/2.jpg);
+#example2 .panel2 {
+  background: url(../img/ng/02.jpg);
 }
-#about-example2 .panel3 {
-  background: url(../img/stones/3.jpg);
+#example2 .panel3 {
+  background: url(../img/ng/03.jpg);
+}
+#example2 .panel4 {
+  background: url(../img/ng/04.jpg);
 }
 
 /* Example 3
    ========================================================================== */
-#about-example3 {
+#example3 {
   height: 400px;
 }
 
-#about-example3 .panel {
+#example3 .panel {
   background: #222;
   color: #7A7A7A;
 }
 
-#about-example3 .content {
+#example3 .content {
   padding: 0 20px 0 120px;
 }
 
-#about-example3 .side-bg {
+#example3 .side-bg {
   width: 100px;
   height: 100%;
   position: absolute;
   left: 0;
-}
-
-#about-example3 .panel1 .side-bg {
-  background: url(../img/stones/1.jpg);
-}
-
-#about-example3 .panel2 .side-bg {
   background: url(../img/stones/5.jpg);
 }
 
 /* Example 4
    ========================================================================== */
 
-#about-example4 {
-  width: 400px;
+#example4 {
+
   height: 200px;
 }
 
-#about-example4 .panel {
+#example4 .panel {
   background: #222;
 }
 
-#about-example4 .panel h2 {
+#example4 .panel h2 {
   display: inline-block;
   padding: 5px;
   color: #fff;
@@ -105,21 +101,21 @@ section {
   transition: all 1s ease;
 }
 
-#about-example4 .panel .dull {
+#example4 .panel .dull {
   color: #333;
 }
 
-#about-example4 .panel img {
+#example4 .panel img {
   display: none;
   height: 150px;
   margin: 0 auto;
 }
 
-#about-example4 .panel.active img {
+#example4 .panel.active img {
   display: block;
 }
 
-#about-example4 .panel.active h2 {
+#example4 .panel.active h2 {
   margin: 0 0 0 60px;
   color: #fff;
 }
