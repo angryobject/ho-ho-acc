@@ -1,0 +1,10 @@
+# OS generated files #
+*.swp
+.DS_Store*
+Thumbs.db
+
+# node.js modules
+node_modules
+
+# Put here whatever you like
+git-ignore/

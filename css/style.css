@@ -1,0 +1,121 @@
+/* ==========================================================================
+   Layout
+   ========================================================================== */
+section {
+  padding: 80px 0 0 0;
+}
+
+.hohoacc {
+  margin: 20px 0;
+}
+
+.github-fork-me img {
+  position: fixed;
+  top: 0;
+  right: 0;
+  border: 0;
+  z-index: 1031;
+}
+
+#examples .hohoacc {
+  margin: 30px 0 60px 0;
+}
+
+/* Example 1
+   ========================================================================== */
+#example1 {
+  height: 200px;
+}
+
+#example1 .panel {
+  background: #222;
+  color: #7A7A7A;
+}
+
+#example1 .panel .content {
+  padding: 10px;
+}
+
+/* Example 2
+   ========================================================================== */
+#example2 {
+  height: 501px;
+}
+
+#example2 .panel1 {
+  background: url(../img/ng/01.jpg);
+}
+#example2 .panel2 {
+  background: url(../img/ng/02.jpg);
+}
+#example2 .panel3 {
+  background: url(../img/ng/03.jpg);
+}
+#example2 .panel4 {
+  background: url(../img/ng/04.jpg);
+}
+
+/* Example 3
+   ========================================================================== */
+#example3 {
+  height: 400px;
+}
+
+#example3 .panel {
+  background: #222;
+  color: #7A7A7A;
+}
+
+#example3 .content {
+  padding: 0 20px 0 120px;
+}
+
+#example3 .side-bg {
+  width: 100px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  background: url(../img/stones/5.jpg);
+}
+
+/* Example 4
+   ========================================================================== */
+
+#example4 {
+
+  height: 200px;
+}
+
+#example4 .panel {
+  background: #222;
+}
+
+#example4 .panel h2 {
+  display: inline-block;
+  padding: 5px;
+  color: #fff;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+#example4 .panel .dull {
+  color: #333;
+}
+
+#example4 .panel img {
+  display: none;
+  height: 150px;
+  margin: 0 auto;
+}
+
+#example4 .panel.active img {
+  display: block;
+}
+
+#example4 .panel.active h2 {
+  margin: 0 0 0 60px;
+  color: #fff;
+}
