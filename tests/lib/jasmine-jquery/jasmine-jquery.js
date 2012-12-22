@@ -38,12 +38,28 @@ var loadStyleFixtures = function() {
   jasmine.getStyleFixtures().proxyCallTo_('load', arguments)
 }
 
+var appendLoadStyleFixtures = function() {
+  jasmine.getStyleFixtures().proxyCallTo_('appendLoad', arguments)
+}
+
 var setStyleFixtures = function(html) {
   jasmine.getStyleFixtures().proxyCallTo_('set', arguments)
 }
 
+var appendSetStyleFixtures = function(html) {
+  jasmine.getStyleFixtures().proxyCallTo_('appendSet', arguments)
+}
+
+var loadJSONFixtures = function() {
+  return jasmine.getJSONFixtures().proxyCallTo_('load', arguments)
+}
+
+var getJSONFixture = function(url) {
+  return jasmine.getJSONFixtures().proxyCallTo_('read', arguments)[url]
+}
+
 jasmine.spiedEventsKey = function (selector, eventName) {
-  return [$(selector).selector, eventName].toString();
+  return [$(selector).selector, eventName].toString()
 }
 
 jasmine.getFixtures = function() {
@@ -98,27 +114,27 @@ jasmine.Fixtures.prototype.clearCache = function() {
 }
 
 jasmine.Fixtures.prototype.cleanUp = function() {
-  jQuery('#' + this.containerId).remove()
+  $('#' + this.containerId).remove()
 }
 
 jasmine.Fixtures.prototype.sandbox = function(attributes) {
   var attributesToSet = attributes || {}
-  return jQuery('<div id="sandbox" />').attr(attributesToSet)
+  return $('<div id="sandbox" />').attr(attributesToSet)
 }
 
 jasmine.Fixtures.prototype.createContainer_ = function(html) {
   var container
-  if(html instanceof jQuery) {
-    container = jQuery('<div id="' + this.containerId + '" />')
+  if(html instanceof $) {
+    container = $('<div id="' + this.containerId + '" />')
     container.html(html)
   } else {
     container = '<div id="' + this.containerId + '">' + html + '</div>'
   }
-  jQuery('body').append(container)
+  $('body').append(container)
 }
 
 jasmine.Fixtures.prototype.addToContainer_ = function(html){
-  var container = jQuery('body').find('#'+this.containerId).append(html)
+  var container = $('body').find('#'+this.containerId).append(html)
   if(!container.length){
     this.createContainer_(html)
   }
@@ -133,9 +149,11 @@ jasmine.Fixtures.prototype.getFixtureHtml_ = function(url) {
 
 jasmine.Fixtures.prototype.loadFixtureIntoCache_ = function(relativeUrl) {
   var url = this.makeFixtureUrl_(relativeUrl)
-  var request = new XMLHttpRequest()
-  request.open("GET", url + "?" + new Date().getTime(), false)
-  request.send(null)
+  var request = $.ajax({
+    type: "GET",
+    url: url + "?" + new Date().getTime(),
+    async: false
+  })
   this.fixturesCache_[relativeUrl] = request.responseText
 }
 
@@ -150,8 +168,8 @@ jasmine.Fixtures.prototype.proxyCallTo_ = function(methodName, passedArguments) 
 
 jasmine.StyleFixtures = function() {
   this.fixturesCache_ = {}
+  this.fixturesNodes_ = []
   this.fixturesPath = 'spec/javascripts/fixtures'
-  this.commentText = 'jasmine-styles'
 }
 
 jasmine.StyleFixtures.prototype.set = function(css) {
@@ -159,34 +177,41 @@ jasmine.StyleFixtures.prototype.set = function(css) {
   this.createStyle_(css)
 }
 
+jasmine.StyleFixtures.prototype.appendSet = function(css) {
+  this.createStyle_(css)
+}
+
 jasmine.StyleFixtures.prototype.preload = function() {
-  this.read.apply(this, arguments)
+  this.read_.apply(this, arguments)
 }
 
 jasmine.StyleFixtures.prototype.load = function() {
   this.cleanUp()
-  this.createStyle_(this.read.apply(this, arguments))
+  this.createStyle_(this.read_.apply(this, arguments))
+}
+
+jasmine.StyleFixtures.prototype.appendLoad = function() {
+  this.createStyle_(this.read_.apply(this, arguments))
 }
 
 jasmine.StyleFixtures.prototype.cleanUp = function() {
-  var comment = this.commentText
-
-  $('head').contents().filter(function() {
-    if(this.nodeType === 8  && this.data === comment) {
-      $(this).next().remove()
-      $(this).remove()
-    }
-  })
+  while(this.fixturesNodes_.length) {
+    this.fixturesNodes_.pop().remove()
+  }
 }
 
 jasmine.StyleFixtures.prototype.createStyle_ = function(html) {
-  var style = jQuery('<!--' + this.commentText + '--><style>').text(html)
-  jQuery('head').append(style)
+  var styleText = $('<div></div>').html(html).text(),
+    style = $('<style>' + styleText + '</style>')
+
+  this.fixturesNodes_.push(style)
+
+  $('head').append(style)
 }
 
-jasmine.StyleFixtures.prototype.read = jasmine.Fixtures.prototype.read
-
 jasmine.StyleFixtures.prototype.clearCache = jasmine.Fixtures.prototype.clearCache
+
+jasmine.StyleFixtures.prototype.read_ = jasmine.Fixtures.prototype.read
 
 jasmine.StyleFixtures.prototype.getFixtureHtml_ = jasmine.Fixtures.prototype.getFixtureHtml_
 
@@ -196,22 +221,73 @@ jasmine.StyleFixtures.prototype.makeFixtureUrl_ = jasmine.Fixtures.prototype.mak
 
 jasmine.StyleFixtures.prototype.proxyCallTo_ = jasmine.Fixtures.prototype.proxyCallTo_
 
+jasmine.getJSONFixtures = function() {
+  return jasmine.currentJSONFixtures_ = jasmine.currentJSONFixtures_ || new jasmine.JSONFixtures()
+}
+
+jasmine.JSONFixtures = function() {
+  this.fixturesCache_ = {}
+  this.fixturesPath = 'spec/javascripts/fixtures/json'
+}
+
+jasmine.JSONFixtures.prototype.load = function() {
+  this.read.apply(this, arguments)
+  return this.fixturesCache_
+}
+
+jasmine.JSONFixtures.prototype.read = function() {
+  var fixtureUrls = arguments
+  for(var urlCount = fixtureUrls.length, urlIndex = 0; urlIndex < urlCount; urlIndex++) {
+    this.getFixtureData_(fixtureUrls[urlIndex])
+  }
+  return this.fixturesCache_
+}
+
+jasmine.JSONFixtures.prototype.clearCache = function() {
+  this.fixturesCache_ = {}
+}
+
+jasmine.JSONFixtures.prototype.getFixtureData_ = function(url) {
+  this.loadFixtureIntoCache_(url)
+  return this.fixturesCache_[url]
+}
+
+jasmine.JSONFixtures.prototype.loadFixtureIntoCache_ = function(relativeUrl) {
+  var self = this
+  var url = this.fixturesPath.match('/$') ? this.fixturesPath + relativeUrl : this.fixturesPath + '/' + relativeUrl
+  $.ajax({
+    async: false, // must be synchronous to guarantee that no tests are run before fixture is loaded
+    cache: false,
+    dataType: 'json',
+    url: url,
+    success: function(data) {
+      self.fixturesCache_[relativeUrl] = data
+    },
+    error: function(jqXHR, status, errorThrown) {
+        throw Error('JSONFixture could not be loaded: ' + url + ' (status: ' + status + ', message: ' + errorThrown.message + ')')
+    }
+  })
+}
+
+jasmine.JSONFixtures.prototype.proxyCallTo_ = function(methodName, passedArguments) {
+  return this[methodName].apply(this, passedArguments)
+}
 
 jasmine.JQuery = function() {}
 
 jasmine.JQuery.browserTagCaseIndependentHtml = function(html) {
-  return jQuery('<div/>').append(html).html()
+  return $('<div/>').append(html).html()
 }
 
 jasmine.JQuery.elementToString = function(element) {
   var domEl = $(element).get(0)
   if (domEl == undefined || domEl.cloneNode)
-    return jQuery('<div />').append($(element).clone()).html()
+    return $('<div />').append($(element).clone()).html()
   else
     return element.toString()
 }
 
-jasmine.JQuery.matchersClass = {};
+jasmine.JQuery.matchersClass = {}
 
 !function(namespace) {
   var data = {
@@ -224,14 +300,14 @@ jasmine.JQuery.matchersClass = {};
       var handler = function(e) {
         data.spiedEvents[jasmine.spiedEventsKey(selector, eventName)] = e
       }
-      jQuery(selector).bind(eventName, handler)
+      $(selector).bind(eventName, handler)
       data.handlers.push(handler)
       return {
         selector: selector,
         eventName: eventName,
         handler: handler,
         reset: function(){
-          delete data.spiedEvents[jasmine.spiedEventsKey(selector, eventName)];
+          delete data.spiedEvents[jasmine.spiedEventsKey(selector, eventName)]
         }
       }
     },
@@ -312,7 +388,7 @@ jasmine.JQuery.matchersClass = {};
 
     toHaveText: function(text) {
       var trimmedText = $.trim(this.actual.text())
-      if (text && jQuery.isFunction(text.test)) {
+      if (text && $.isFunction(text.test)) {
         return text.test(trimmedText)
       } else {
         return trimmedText == text
@@ -345,7 +421,7 @@ jasmine.JQuery.matchersClass = {};
 
     toHandle: function(event) {
 
-      var events = this.actual.data('events')
+      var events = $._data(this.actual.get(0), "events")
 
       if(!events || !event || typeof event !== "string") {
         return false
@@ -370,7 +446,7 @@ jasmine.JQuery.matchersClass = {};
 
     // tests the existence of a specific event binding + handler
     toHandleWith: function(eventName, eventHandler) {
-      var stack = this.actual.data("events")[eventName]
+      var stack = $._data(this.actual.get(0), "events")[eventName]
       for (var i = 0; i < stack.length; i++) {
         if (stack[i].handler == eventHandler) return true
       }
@@ -388,11 +464,11 @@ jasmine.JQuery.matchersClass = {};
 
     jasmine.JQuery.matchersClass[methodName] = function() {
       if (this.actual
-        && (this.actual instanceof jQuery
+        && (this.actual instanceof $
           || jasmine.isDomNode(this.actual))) {
             this.actual = $(this.actual)
             var result = jQueryMatchers[methodName].apply(this, arguments)
-            var element;
+            var element
             if (this.actual.get && (element = this.actual.get()[0]) && !$.isWindow(element) && element.tagName !== "HTML")
               this.actual = jasmine.JQuery.elementToString(this.actual)
             return result
@@ -427,7 +503,7 @@ beforeEach(function() {
   this.addMatchers({
     toHaveBeenTriggered: function(){
       var eventName = this.actual.eventName,
-          selector = this.actual.selector;
+          selector = this.actual.selector
       this.message = function() {
         return [
           "Expected event " + eventName + " to have been triggered on " + selector,
@@ -451,7 +527,7 @@ beforeEach(function() {
   this.addMatchers({
     toHaveBeenPrevented: function() {
       var eventName = this.actual.eventName,
-          selector = this.actual.selector;
+          selector = this.actual.selector
       this.message = function() {
         return [
           "Expected event " + eventName + " to have been prevented on " + selector,
