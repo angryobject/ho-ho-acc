@@ -186,14 +186,30 @@ $(".hohoacc").hoHoAcc({
                 <li><code>easing</code> specifies the easing function name to be applied to animation.</li>
               </ul>
               <p>Additional classes avaliable for panels:</p>
-                <ul>
-                  <li><code>.panel-bg-centered</code> forces the background image of panel to be aligned center
-                    (<span class="badge badge-warning">warn:</span> using !importaint).</li>
-                  <li><code>.panel-bg-righted</code> forces the background image of panel to be aligned right
-                    (<span class="badge badge-warning">warn:</span> using !importaint).</li>
-                  <li><code>.panel-centered</code> forces the contents of the panel to align center.</li>
-                  <li><code>.panel-righted</code> forces the contents of the panel to align right.</li>
-                </ul>
+              <ul>
+                <li><code>.panel-bg-centered</code> forces the background image of panel to be aligned center
+                  (<span class="badge badge-warning">warn:</span> using !importaint).</li>
+                <li><code>.panel-bg-righted</code> forces the background image of panel to be aligned right
+                  (<span class="badge badge-warning">warn:</span> using !importaint).</li>
+                <li><code>.panel-centered</code> forces the contents of the panel to align center.</li>
+                <li><code>.panel-righted</code> forces the contents of the panel to align right.</li>
+              </ul>
+              <p>Two events are fired on the accordion container node (e.g. on <code>$(".hohoacc")</code>):</p>
+              <ul>
+                <li><code>expandPanelStart</code> - gets fired when a panel starts to expand.</li>
+                <li><code>collapsePanelStart</code> - gets fired when a panel starts to collapse.</li>
+              </ul>
+              <p>You can subscribe to those and do some extra work, like in the last example on this page:</p>
+              <pre class="prettyprint linenums">
+$("#example4").on("expandPanelStart",
+function(e) {
+  $(this).find("h2").addClass("dull");
+});
+
+$("#example4").on("collapsePanelStart",
+function(e) {
+  $(this).find("h2").removeClass("dull");
+});</pre>
             </div>
           </div>
         </section>
